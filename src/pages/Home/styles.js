@@ -26,6 +26,15 @@ export const Title = styled(Text)`
   margin: 16px 0;
 `;
 
+export const CarouselTitle = styled.h1`
+  font-family: ${({ theme: { fonts } }) => fonts.regular};
+  color: ${({ theme: { colors } }) => colors.text};
+  font-size: 24px;
+  font-weight: bold;
+  line-heigth: 29px;
+  margin: 19px  0;
+`;
+
 export const Carousel = styled(Slider)`
   .slick-slide {
     margin-right: 30px;
