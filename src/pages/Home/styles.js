@@ -26,7 +26,7 @@ export const Title = styled(Text)`
   margin: 16px 0;
 `;
 
-export const CarouselTitle = styled.h1`
+export const CarrosselTitle = styled.h1`
   font-family: ${({ theme: { fonts } }) => fonts.regular};
   color: ${({ theme: { colors } }) => colors.text};
   font-size: 24px;
@@ -35,7 +35,7 @@ export const CarouselTitle = styled.h1`
   margin: 19px  0;
 `;
 
-export const Carousel = styled(Slider)`
+export const Carrossel = styled(Slider)`
   .slick-slide {
     margin-right: 30px;
   }
