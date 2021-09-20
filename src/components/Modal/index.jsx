@@ -9,15 +9,12 @@ const Modal = ({ children, open, onClose }) => {
       if (event.keyCode === 27) onClose();
     }
     window.addEventListener('keydown', onEsc);
-
     return () => {
-      //window.addEventListener('keydown', onEsc);
       window.removeEventListener('keydown', onEsc);
-
     };
   }, [onClose]);
 
-  //Se não estiver true naão retorna nada
+  //Se não estiver true não retorna nada
   if (!open) return null;
 
   function onOverlayClick() {

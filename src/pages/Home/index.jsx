@@ -9,7 +9,7 @@ import logo from '../../assets/logo.svg';
 import restaurante from '../../assets/restaurante-fake.png';
 
 import {
-  Card, RestaurantCard
+  Card, RestaurantCard, Modal
 } from '../../components';
 
 import { Container, Search, Logo, Title, Carrossel, Wrapper, CarrosselTitle } from './styles';
@@ -17,6 +17,8 @@ import { Container, Search, Logo, Title, Carrossel, Wrapper, CarrosselTitle } fr
 const Home = () => {
 
   const [inputValue, setinputValue] = useState('');
+  const [modalOpened, setmodalOpened] = useState(true);
+
 
   const settings = {
     dots: false,
@@ -56,7 +58,7 @@ const Home = () => {
           </Carrossel>
         </Search>
         <RestaurantCard />
-
+        <Modal open={modalOpened} onClose={() => setmodalOpened(false)} />
 
       </Container>
     </Wrapper>
