@@ -1,5 +1,7 @@
 /* eslint-disable camelcase */
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+
 import TextField, { Input } from '@material/react-text-field';
 import MaterialIcon from '@material/react-material-icon';
 
@@ -9,15 +11,20 @@ import logo from '../../assets/logo.svg';
 import restaurante from '../../assets/restaurante-fake.png';
 
 import {
-  Card, RestaurantCard, Modal
+  Card, RestaurantCard, Modal, Map
 } from '../../components';
 
 import { Container, Search, Logo, Title, Carrossel, Wrapper, CarrosselTitle } from './styles';
 
 const Home = () => {
 
-  const [inputValue, setinputValue] = useState('');
-  const [modalOpened, setmodalOpened] = useState(true);
+  const [inputValue, setValue] = useState('');
+  //const [inputValue, setValue] = useState('');
+  const [modalOpened, setmodalOpened] = useState(false);
+  const [query, setQuery] = useState('');
+  const { restaurants, restaurantSelected } = useSelector((state) => state.restaurants);
+
+
 
 
   const settings = {
@@ -29,9 +36,17 @@ const Home = () => {
     slidesToScroll: 4,
     adaptiveHeight: true,
   };
+  //Campo busca restaurantes
+  const handleChange = (e) => {
+    setValue(e.target.value);
+  };
+  const handleKeyPress = (e) => {
+    //console.log('tecla apertada', e.key)
 
-
-
+    if (e.key === 'Enter') {
+      setQuery(inputValue);
+    }
+  };
   return (
     <Wrapper>
       <Container>  
@@ -41,26 +56,27 @@ const Home = () => {
             outlined
             label="Pesquisar"
             trailingIcon={<MaterialIcon role="button" icon="search" />}>
-            <Input value={inputValue} onChange={(e) => {setinputValue(e.target.value)} }
-            />
+            
+            <Input type="text" value={inputValue} onKeyPress={handleKeyPress} onChange={handleChange} />
           </TextField>
           <CarrosselTitle>Na sua Área</CarrosselTitle>
           <Carrossel {...settings} >
-            <Card photo={restaurante} title='Nome restaurante 01' />
-            <Card photo={restaurante} title='Nome restaurante 02' />
-            <Card photo={restaurante} title='Nome restaurante 03' />
-            <Card photo={restaurante} title='Nome restaurante 04' />
-            <Card photo={restaurante} title='Nome restaurante 05' />
-            <Card photo={restaurante} title='Nome restaurante 06' />
-            <Card photo={restaurante} title='Nome restaurante 07' />
-            <Card photo={restaurante} title='Nome restaurante 08' />
-
+            {restaurants.map((restaurant) => (
+              <Card
+              key={restaurant.place_id}
+              photo={restaurant.photos ? restaurant.photos[0].getUrl() : restaurant.icon}
+              title={restaurant.name}/>
+            ))}
           </Carrossel>
         </Search>
-        <RestaurantCard />
-        <Modal open={modalOpened} onClose={() => setmodalOpened(false)} />
+        {restaurants.map((restaurant) => (
+        <RestaurantCard restaurant={restaurant}/>
+        ))}
+        
 
+        <Modal open={modalOpened} onClose={() => setmodalOpened(false)} />
       </Container>
+      <Map query={query}/>
     </Wrapper>
   );
 };

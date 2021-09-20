@@ -4,7 +4,7 @@ import ReactStars from 'react-rating-stars-component';
 import { Restaurant, RestaurantInfo, Content, RestaurantPhoto, Title, Address } from './styles';
 //import Text from '../Text';
 //import ImageSkeleton from '../ImageSkeleton';
-import restaurante from '../../assets/restaurante-fake.png';
+//import restaurante from '../../assets/restaurante-fake.png';
 
 
 const RestaurantCard = ({ restaurant, onClick }) => {
@@ -13,12 +13,13 @@ const RestaurantCard = ({ restaurant, onClick }) => {
   return (
     <Restaurant onClick={onClick}>
       <RestaurantInfo>
-        <Title>Nome restaurante</Title>
-        <ReactStars count={5} value={3} edit={false} isHalf activeColor="#e7711c" />
+        <Title>{restaurant.name}</Title>
+        <ReactStars count={5} value={restaurant.rating} edit={false} isHalf activeColor="#e7711c" />
 
-        <Address>Rua Vinte cinco, 456</Address>
+
+        <Address>{restaurant.formatted_address || restaurant.vicinity}</Address>
       </RestaurantInfo>
-      <RestaurantPhoto src={restaurante} alt='Foto do Restaurante'/>
+      <RestaurantPhoto src={restaurant.photos ? restaurant.photos[0].getUrl() : restaurant.icon} alt='Foto do Restaurante'/>
     </Restaurant>
   );
 };
