@@ -9,7 +9,7 @@ import logo from '../../assets/logo.svg';
 import restaurante from '../../assets/restaurante-fake.png';
 
 import {
-  Card,
+  Card, RestaurantCard
 } from '../../components';
 
 import { Container, Search, Logo, Title, Carrossel, Wrapper, CarrosselTitle } from './styles';
@@ -55,6 +55,7 @@ const Home = () => {
 
           </Carrossel>
         </Search>
+        <RestaurantCard />
 
 
       </Container>
