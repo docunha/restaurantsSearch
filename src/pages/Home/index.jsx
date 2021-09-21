@@ -21,6 +21,7 @@ const Home = () => {
   const [inputValue, setValue] = useState('');
   //const [inputValue, setValue] = useState('');
   const [modalOpened, setmodalOpened] = useState(false);
+  const [placeId, setPlaceId] = useState(null);
   const [query, setQuery] = useState('');
   const { restaurants, restaurantSelected } = useSelector((state) => state.restaurants);
 
@@ -42,11 +43,14 @@ const Home = () => {
   };
   const handleKeyPress = (e) => {
     //console.log('tecla apertada', e.key)
-
     if (e.key === 'Enter') {
       setQuery(inputValue);
     }
   };
+  const handleOpenModal = (placeId) => {
+    setPlaceId(placeId);
+    setmodalOpened(true);
+  } 
   return (
     <Wrapper>
       <Container>  
@@ -70,13 +74,23 @@ const Home = () => {
           </Carrossel>
         </Search>
         {restaurants.map((restaurant) => (
-        <RestaurantCard restaurant={restaurant}/>
+        <RestaurantCard onClick={() => { handleOpenModal(restaurant.place_id)}} restaurant={restaurant}/>
         ))}
         
 
-        <Modal open={modalOpened} onClose={() => setmodalOpened(false)} />
+        <Modal open={modalOpened} onClose={() => setmodalOpened(false)}>
+          <p>{restaurantSelected?.name}</p>
+          <p>{restaurantSelected?.formatted_phone_number}</p>
+          <p>{restaurantSelected?.formatted_address}</p>
+          <p>
+                {restaurantSelected?.opening_hours?.open_now
+                  ? 'Aberto agora :)'
+                  : 'Fechado neste momento :('}
+          </p>
+
+        </Modal>
       </Container>
-      <Map query={query}/>
+      <Map query={query} placeId={placeId}/>
     </Wrapper>
   );
 };

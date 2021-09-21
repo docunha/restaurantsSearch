@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { GoogleApiWrapper, Map, Marker } from 'google-maps-react';
 
-import { setRestaurants, setRestaurant } from '../../redux/modules/restaurants';
+import { setRestaurants,  setRestaurant } from '../../redux/modules/restaurants';
 
 
 export const MapContainer = (props) => {
@@ -12,13 +12,38 @@ export const MapContainer = (props) => {
   const [map, setMap] = useState(null);
   const { restaurants } = useSelector((state) => state.restaurants);
 
+
+
   //console.log('query da busca', query)
-  //Se tiver query ele faz a busca no mapa
+  //Se existir o query ele faz a busca no mapa
    useEffect(() => {
     if (query) {
       searchByQuery(query);
     }
   }, [query]);
+  //Se existir o placeID ele busca informações do restaurante
+  useEffect(() => {
+   if (placeId) {
+     getRestaurantById(placeId);
+   }
+  },[placeId]);
+
+    const getRestaurantById = (placeId) => {
+      const service = new google.maps.places.PlacesService(map);
+      dispatch(setRestaurant(null));
+  
+      const request = {
+        placeId,
+        fields: ['name', 'opening_hours', 'formatted_address', 'formatted_phone_number'],
+      };
+  
+      service.getDetails(request, (place, status) => {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          console.log('informações restaurante selecionado > > > >', place)
+          dispatch(setRestaurant(place));
+        }
+      });
+    };
 
   //Faz buscas no google por restaturantes
   const searchByQuery = (query) => {
@@ -39,7 +64,7 @@ export const MapContainer = (props) => {
       }
     });
   };
-
+  //Faz busca local
   const searchNearby = (map, center) => {
     const service = new google.maps.places.PlacesService(map);
 
@@ -68,6 +93,7 @@ export const MapContainer = (props) => {
       centerAroundCurrentLocation
       onReady={onMapReady}
       onRecenter={onMapReady}
+      {...props }
 
       >
 
