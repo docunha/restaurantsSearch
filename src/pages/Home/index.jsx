@@ -86,7 +86,7 @@ const Home = () => {
           <p>{restaurantSelected?.formatted_phone_number}</p>
           <p>{restaurantSelected?.formatted_address}</p>
           <p>
-                {restaurantSelected?.opening_hours?.open_now
+                {restaurantSelected?.opening_hours?.isOpen
                   ? 'Aberto agora :)'
                   : 'Fechado neste momento :('}
           </p>
