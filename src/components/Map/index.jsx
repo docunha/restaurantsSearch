@@ -48,6 +48,8 @@ export const MapContainer = (props) => {
   //Faz buscas no google por restaturantes
   const searchByQuery = (query) => {
     const service = new google.maps.places.PlacesService(map);
+    dispatch(setRestaurant([]));
+
 
     const request = {
       location: map.center,
@@ -67,6 +69,8 @@ export const MapContainer = (props) => {
   //Faz busca local
   const searchNearby = (map, center) => {
     const service = new google.maps.places.PlacesService(map);
+    dispatch(setRestaurant([]));
+
 
     const request = {
       location: map.center,
