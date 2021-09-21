@@ -10,7 +10,7 @@ import Slider from 'react-slick';
 import logo from '../../assets/logo.svg';
 
 import {
-  Card, RestaurantCard, Modal, Map, Loader
+  Card, RestaurantCard, Modal, Map, Loader, Skeleton
 } from '../../components';
 
 import { Container, Search, Logo, Title, Carrossel, Wrapper, CarrosselTitle } from './styles';
@@ -82,6 +82,8 @@ const Home = () => {
         
 
         <Modal open={modalOpened} onClose={() => setmodalOpened(false)}>
+          {restaurantSelected ? (
+            <>
           <p>{restaurantSelected?.name}</p>
           <p>{restaurantSelected?.formatted_phone_number}</p>
           <p>{restaurantSelected?.formatted_address}</p>
@@ -90,6 +92,15 @@ const Home = () => {
                   ? 'Aberto agora :)'
                   : 'Fechado neste momento :('}
           </p>
+            </>
+          ) : (
+            <>
+              <Skeleton width="10px" height="10px" />
+              <Skeleton width="10px" height="10px" />
+              <Skeleton width="10px" height="10px" />
+              <Skeleton width="10px" height="10px" />
+            </>
+          )}
 
         </Modal>
       </Container>
