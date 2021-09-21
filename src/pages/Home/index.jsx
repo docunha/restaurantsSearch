@@ -8,10 +8,9 @@ import MaterialIcon from '@material/react-material-icon';
 import Slider from 'react-slick';
 
 import logo from '../../assets/logo.svg';
-import restaurante from '../../assets/restaurante-fake.png';
 
 import {
-  Card, RestaurantCard, Modal, Map
+  Card, RestaurantCard, Modal, Map, Loader
 } from '../../components';
 
 import { Container, Search, Logo, Title, Carrossel, Wrapper, CarrosselTitle } from './styles';
@@ -27,7 +26,7 @@ const Home = () => {
 
 
 
-
+  //Configurações do Carrossel
   const settings = {
     dots: false,
     infinite: true,
@@ -63,15 +62,19 @@ const Home = () => {
             
             <Input type="text" value={inputValue} onKeyPress={handleKeyPress} onChange={handleChange} />
           </TextField>
-          <CarrosselTitle>Na sua Área</CarrosselTitle>
-          <Carrossel {...settings} >
-            {restaurants.map((restaurant) => (
-              <Card
-              key={restaurant.place_id}
-              photo={restaurant.photos ? restaurant.photos[0].getUrl() : restaurant.icon}
-              title={restaurant.name}/>
-            ))}
-          </Carrossel>
+          {restaurants.length > 0 ? (
+            <>            
+              <CarrosselTitle>Na sua Área</CarrosselTitle>
+              <Carrossel {...settings} >
+                {restaurants.map((restaurant) => (
+                  <Card
+                  key={restaurant.place_id}
+                  photo={restaurant.photos ? restaurant.photos[0].getUrl() : restaurant.icon}
+                  title={restaurant.name}/>
+                ))}
+              </Carrossel>
+            </>
+          ) : (<Loader/>)}
         </Search>
         {restaurants.map((restaurant) => (
         <RestaurantCard onClick={() => { handleOpenModal(restaurant.place_id)}} restaurant={restaurant}/>
