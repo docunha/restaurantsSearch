@@ -1,13 +1,13 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 import Slider from 'react-slick';
 
-
+import { Text } from '../../components';
 
 export const Container = styled.aside`
   background-color: ${({ theme: { colors } }) => colors.background};
   width: 360px;
   height: 100vh;
-  overflow-y: auto;
+  overflow-y: scroll;
 `;
 
 export const Search = styled.section`
@@ -26,23 +26,12 @@ export const Title = styled(Text)`
   margin: 16px 0;
 `;
 
-export const CarrosselTitle = styled.h1`
-  font-family: ${({ theme: { fonts } }) => fonts.regular};
-  color: ${({ theme: { colors } }) => colors.text};
-  font-size: 24px;
-  font-weight: bold;
-  line-heigth: 29px;
-  margin: 19px  0;
-`;
-
 export const Carrossel = styled(Slider)`
   .slick-slide {
-    margin-right: 30px;
+    margin-right: 16px;
   }
 `;
 
-
 export const Wrapper = styled.div`
   display: flex;
-  flex-direction: row;
 `;
